@@ -9,8 +9,7 @@ def DPSGD(train_data, test_data, model,optimizer, batch_size, epsilon_budget, de
 
     minibatch_loader, microbatch_loader = get_data_loaders_possion(minibatch_size=batch_size,microbatch_size=1,iterations=1)
 
-    test_dl = torch.utils.data.DataLoader(
-        test_data, batch_size=batch_size, shuffle=False)
+    test_dl = torch.utils.data.DataLoader(test_data, batch_size=batch_size, shuffle=False)
 
     orders = [1 + x / 10.0 for x in range(1, 100)] + list(range(11, 64))+ [128, 256, 512]
     iter = 1
