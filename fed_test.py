@@ -6,7 +6,7 @@ import torch
 
 if __name__=="__main__":
     train_data, test_data = load_dataset('MNIST')
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = get_model('DPSGD', 'MNIST', device)
     batch_size=256
     learning_rate = 0.002
