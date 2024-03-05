@@ -1,7 +1,7 @@
 from data.utils.dirichlet_nonIID_data import fed_dataset_NonIID_Dirichlet
 from FL.utils.create_client import create_clients
 from FL.utils.update_model import send_center_model_to_clients, set_center_model_with_weights
-from FL.utils.local_train import local_clients_train_without_dp_one_batch
+from FL.utils.local_train import local_clients_train_without_dp_one_batch, local_clients_train_without_dp_one_epoch
 from train_and_validation.validation import validation
 from data.utils.get_data import load_dataset
 from models.get_model import get_model
@@ -18,7 +18,7 @@ def fed_avg(train_data, test_data, test_batchsize, num_of_clients, lr, momentum,
     for i in range(iters):
         print("round: ", i+1)
         clients_model_list = send_center_model_to_clients(center_model, clients_model_list)
-        local_clients_train_without_dp_one_batch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device)
+        local_clients_train_without_dp_one_epoch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device)
         center_model = set_center_model_with_weights(center_model, clients_model_list, weight_of_each_client)
         test_loss, test_acc = validation(center_model, test_data_loader, device)
         print(f"Iteration: {i+1}, Test Loss: {test_loss:.2f}, Test Accuracy: {test_acc:.2f} %")

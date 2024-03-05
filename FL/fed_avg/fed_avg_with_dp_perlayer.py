@@ -26,7 +26,9 @@ def fed_avg_with_dp_perlayer(train_data, test_data, test_batchsize, num_of_clien
         clients_model_list = send_center_model_to_clients(center_model, clients_model_list)
         local_clients_train_with_dp_perlayer_one_epoch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device)
 
-        ## TODO: rdp compute
+        rdp += compute_rdp(q, sigma, num_epoch * math.floor(1/q), orders)
+        epsilon, best_alpha = compute_eps(orders, rdp, delta)
+        print(f"Iteraion: {i+1}, epsilon: {epsilon:.4f}, best_alpha: {best_alpha}")
 
         center_model = set_center_model_with_weights(center_model, clients_model_list, weight_of_each_client)
         test_loss, test_acc = validation(center_model, test_data_loader, device)
