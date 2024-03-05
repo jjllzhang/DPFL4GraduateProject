@@ -27,7 +27,6 @@ def create_clients_with_dp(num_of_clients, lr, model, momentum, max_norm, sigma,
             microbatch_size=1,
             params=clients_list[i].parameters(),
             lr=lr,
-            momentum=momentum
         )
         clients_optimizer_list.append(optimizer)
         clients_criterion_list.append(torch.nn.CrossEntropyLoss())

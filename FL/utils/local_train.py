@@ -13,11 +13,11 @@ def local_clients_train_without_dp_one_epoch(num_of_clients, clients_data_list, 
         optimizer = clients_optimizer_list[i]
         criterion = clients_criterion_list[i]
 
-        print("Client:", i)
+        # print("Client:", i)
         
         for epoch in range(num_epoch):
             train_loss, train_accuracy = train(model, train_dataloader, optimizer, device)
-            print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
+            # print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
 
 
 def local_clients_train_without_dp_one_batch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device):
@@ -31,12 +31,12 @@ def local_clients_train_without_dp_one_batch(num_of_clients, clients_data_list, 
         optimizer = clients_optimizer_list[i]
         criterion = clients_criterion_list[i]
 
-        print("Client:", i)
+        # print("Client:", i)
         
         for epoch in range(num_epoch):
             train_dataloader = minibatch_loader(clients_data_list[i])
             train_loss, train_accuracy = train(model, train_dataloader, optimizer, device)
-            print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
+            # print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
 
 def local_clients_train_with_dp_one_epoch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device):
     for i in range(num_of_clients):
@@ -46,11 +46,11 @@ def local_clients_train_with_dp_one_epoch(num_of_clients, clients_data_list, cli
         optimizer = clients_optimizer_list[i]
         criterion = clients_criterion_list[i]
 
-        print("Client:", i)
+        # print("Client:", i)
 
         for epoch in range(num_epoch):
             train_loss, train_accuracy = train_with_dp(model, train_dataloader, optimizer, device)
-            print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
+            # print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
 
 def local_clients_train_with_dp_one_batch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device):
     for i in range(num_of_clients):
@@ -63,9 +63,9 @@ def local_clients_train_with_dp_one_batch(num_of_clients, clients_data_list, cli
         optimizer = clients_optimizer_list[i]
         criterion = clients_criterion_list[i]
 
-        print("Client:", i)
+        # print("Client:", i)
         
         for epoch in range(num_epoch):
             train_dataloader = minibatch_loader(clients_data_list[i])
             train_loss, train_accuracy = train_with_dp(model, train_dataloader, optimizer, device)
-            print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
+            # print(f'Epoch: {epoch + 1} |'f' Train Loss: {train_loss:.4f} |'f' Train Accuracy: {train_accuracy:.2f}%')
