@@ -9,7 +9,7 @@ from models.get_model import get_model
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='运行带有不同参数的机器学习模型 (Run a machine learning model with different parameters)')
-    parser.add_argument('--dataset', type=str, default='MNIST', choices=['MNIST', 'CIFAR10'], help='数据集名称 (Dataset name)')
+    parser.add_argument('--dataset', type=str, default='MNIST', choices=['MNIST', 'CIFAR10', 'FMNIST'], help='数据集名称 (Dataset name)')
     parser.add_argument('--test_batch_size', type=int, default=256, help='测试批量大小 (Test batch size)')
     parser.add_argument('--lr', type=float, default=0.002, help='学习率 (Learning rate)')
     parser.add_argument('--epochs', type=int, default=1, help='训练周期数 (Number of epochs)')

@@ -17,6 +17,14 @@ def load_dataset(dataset_name):
         ])
         train_dataset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
         test_dataset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
+    elif dataset_name == 'FMNIST':
+        # Fashion-MNIST数据集
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.2860,), (0.3530,))
+        ])
+        train_dataset = datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)
+        test_dataset = datasets.FashionMNIST(root='./data', train=False, download=True, transform=transform)
     else:
         raise ValueError("Unsupported dataset name.")
 
