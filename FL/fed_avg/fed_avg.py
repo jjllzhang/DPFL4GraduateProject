@@ -12,7 +12,7 @@ def fed_avg(train_data, test_data, test_batchsize, num_of_clients, lr, momentum,
     clients_model_list, clients_optimizer_list, clients_criterion_list = create_clients(num_of_clients, lr, model)
     center_model = model
     test_data_loader = torch.utils.data.DataLoader(test_data, batch_size=test_batchsize, shuffle=False)
-    print("start fed avg")
+    print("Start Federated Learning without DP")
     test_acc_list = []
     test_loss_list = []
     for i in range(iters):
@@ -21,10 +21,10 @@ def fed_avg(train_data, test_data, test_batchsize, num_of_clients, lr, momentum,
         local_clients_train_without_dp_one_batch(num_of_clients, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device)
         center_model = set_center_model_with_weights(center_model, clients_model_list, weight_of_each_client)
         test_loss, test_acc = validation(center_model, test_data_loader, device)
-        print("Iteration: ", str(i+1), "Test Loss:", test_loss, "Test Accuracy:", test_acc, "%")
+        print(f"Iteration: {i+1}, Test Loss: {test_loss:.2f}, Test Accuracy: {test_acc:.2f} %")
         test_acc_list.append(test_acc)
         test_loss_list.append(test_loss)
 
     record = [iters, num_epoch, test_loss_list, test_acc_list]
-    torch.save(record, "../record/{}.pth".format(int(num_epoch)))
+    return record
 

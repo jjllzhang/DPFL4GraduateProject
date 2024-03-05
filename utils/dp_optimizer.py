@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 from torch.optim import SGD, Adam, Adagrad, RMSprop
 
@@ -24,7 +25,7 @@ def make_optimizer_class(cls):
             for group in self.param_groups:
                 for param in group['params']:
                     if param.requires_grad:
-                        total_norm += param.grad.data.norm(2).item() ** 2.
+                        total_norm += param.grad.data.norm(2).item() ** 2
 
             total_norm = total_norm ** .5
             clip_coef = min(self.l2_norm_clip / (total_norm+ 1e-6), 1.)
@@ -57,6 +58,43 @@ def make_optimizer_class(cls):
                         param.grad.data.mul_(self.microbatch_size / self.minibatch_size)
 
             super().step(*args, **kwargs)
+
+        def compute_L2norm_perlayer(self):
+            num_perplayer = len(self.param_groups)
+            perlayer_norm = np.zeros(num_perplayer, dtype=np.float, order='C')
+            for i, group in enumerate(self.param_groups):
+                layer_norm = 0.0
+                for param in group['params']:
+                    if param.requires_grad:
+                        layer_norm += param.grad.data.norm(2).item() ** 2
+                perlayer_norm[i] = layer_norm ** 0.5
+
+            return perlayer_norm
+        
+        def microbatch_step_perlayer(self):
+            num_perlayer = len(self.param_groups)
+            perlayer_norm = self.compute_L2norm_perlayer()
+            clip_coef = np.zeros(num_perlayer, dtype=np.float, order='C')
+            for i in range(num_perlayer):
+                clip_coef[i] = min(self.l2_norm_clip[i] / (perlayer_norm[i] + 1e-6), 1.)
+
+            for i, group in enumerate(self.param_groups):
+                for param in group['params']:
+                    if param.requires_grad:
+                        param.grad.data.mul_(clip_coef[i])
+
+            return perlayer_norm
+        
+        def step_dp_perlayer(self, *args, **kwargs):
+            for i, group in enumerate(self.param_groups):
+                for param, accum_grad in zip(group['params'], group['accum_grads']):
+                    if param.requires_grad:
+                        param.grad.data = accum_grad.clone()
+                        param.grad.data.add_(self.l2_norm_clip[i] * np.sqrt(len(self.param_groups)) * self.noise_multiplier * torch.randn_like(param.grad.data))
+                        param.grad.data.mul_(self.microbatch_size / self.minibatch_size)
+            
+            super().step(*args, **kwargs)
+
 
     return DPOptimizerClass
 
