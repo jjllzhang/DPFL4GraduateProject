@@ -10,9 +10,9 @@ from models.get_model import get_model
 import torch
 import math
 
-def fed_avg_with_dp_perlayer(train_data, test_data, test_batchsize, num_of_clients, lr, momentum, num_epoch, iters, alpha, seed, q, max_norms, sigma, delta, model, device):
+def fed_avg_with_dp_perlayer(train_data, test_data, test_batchsize, num_of_clients, lr, momentum, num_epoch, iters, alpha, seed, q, max_norm, sigma, delta, model, device):
     clients_data_list, weight_of_each_client, batchsize_of_each_client = fed_dataset_NonIID_Dirichlet(train_data, num_of_clients, alpha, seed, q)
-    clients_model_list, clients_optimizer_list, clients_criterion_list = create_clients_with_dp(num_of_clients, lr, model, momentum, max_norms, sigma, batchsize_of_each_client)
+    clients_model_list, clients_optimizer_list, clients_criterion_list = create_clients_with_dp(num_of_clients, lr, model, momentum, max_norm, sigma, batchsize_of_each_client)
     center_model = model
     test_data_loader = torch.utils.data.DataLoader(test_data, batch_size=test_batchsize, shuffle=False)
     orders = (list(range(2,64)) + [128, 256, 512])

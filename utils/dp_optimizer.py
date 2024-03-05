@@ -75,8 +75,15 @@ def make_optimizer_class(cls):
             num_perlayer = len(self.param_groups)
             perlayer_norm = self.compute_L2norm_perlayer()
             clip_coef = np.zeros(num_perlayer, dtype=np.float, order='C')
+            l2_norm_clip_perlayer = []
+            total_l2norm_square = np.sum(np.square(perlayer_norm))
+            for norm in perlayer_norm:
+                proposition = (norm ** 2) / total_l2norm_square
+                clip_threshold = proposition ** 0.5 * self.l2_norm_clip
+                l2_norm_clip_perlayer.append(clip_threshold)
+
             for i in range(num_perlayer):
-                clip_coef[i] = min(self.l2_norm_clip[i] / (perlayer_norm[i] + 1e-6), 1.)
+                clip_coef[i] = min(self.l2_norm_clip_perlayer[i] / (perlayer_norm[i] + 1e-6), 1.)
 
             for i, group in enumerate(self.param_groups):
                 for param in group['params']:
@@ -86,11 +93,21 @@ def make_optimizer_class(cls):
             return perlayer_norm
         
         def step_dp_perlayer(self, *args, **kwargs):
+            perlayer_norm = self.compute_L2norm_perlayer()
+            total_l2norm_square = np.sum(np.square(perlayer_norm))
+            l2_norm_clip_perlayer = []
+
+            for norm in perlayer_norm:
+                proposition = (norm ** 2) / total_l2norm_square
+                clip_threshold = proposition ** 0.5 * self.l2_norm_clip
+                l2_norm_clip_perlayer.append(clip_threshold)
+
+            self.l2_norm_clip_perlayer = l2_norm_clip_perlayer
             for i, group in enumerate(self.param_groups):
                 for param, accum_grad in zip(group['params'], group['accum_grads']):
                     if param.requires_grad:
                         param.grad.data = accum_grad.clone()
-                        param.grad.data.add_(self.l2_norm_clip[i] * np.sqrt(len(self.param_groups)) * self.noise_multiplier * torch.randn_like(param.grad.data))
+                        param.grad.data.add_(self.l2_norm_clip_perlayer[i] * self.noise_multiplier * torch.randn_like(param.grad.data))
                         param.grad.data.mul_(self.microbatch_size / self.minibatch_size)
             
             super().step(*args, **kwargs)
