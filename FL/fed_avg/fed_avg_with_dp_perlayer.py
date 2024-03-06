@@ -36,5 +36,5 @@ def fed_avg_with_dp_perlayer(train_data, test_data, test_batchsize, num_of_clien
         test_acc_list.append(test_acc)
         test_loss_list.append(test_loss)
 
-    record = [iters, num_epoch, test_loss_list, test_acc_list]
+    record = [test_loss_list, test_acc_list]
     return record

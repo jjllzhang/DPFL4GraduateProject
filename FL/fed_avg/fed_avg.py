@@ -25,6 +25,6 @@ def fed_avg(train_data, test_data, test_batchsize, num_of_clients, lr, momentum,
         test_acc_list.append(test_acc)
         test_loss_list.append(test_loss)
 
-    record = [iters, num_epoch, test_loss_list, test_acc_list]
+    record = [test_loss_list, test_acc_list]
     return record
 
