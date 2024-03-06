@@ -79,4 +79,6 @@ if __name__ == "__main__":
         raise NotImplementedError(f"Algorithm {algorithm} is not implemented.")
     
     if test_loss_list is not None and test_acc_list is not None:
+        test_loss_list = [round(loss.item(), 2) for loss in test_loss_list]
+        test_acc_list = [round(acc, 2) for acc in test_acc_list]
         log_results(config, test_loss_list, test_acc_list)
