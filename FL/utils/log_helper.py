@@ -6,7 +6,10 @@ def log_results(config, test_loss_list, test_acc_list):
     config_modified = config.copy()
     
     # 移除不需要记录在文件名中的配置项
-    keys_to_remove = ['device', 'epochs', 'momentum', 'seed', 'save_dir', 'start_round', 'test_batch_size']
+    keys_to_remove = ['device', 'epochs', 'momentum', 'seed', 'save_dir', 'start_round', 'test_batch_size', 'iters']
+    if config['algorithm'] == 'DPSGD':
+        keys_to_remove.append('num_clients')
+        keys_to_remove.append('alpha')
     for key in keys_to_remove:
         config_modified.pop(key, None)
     

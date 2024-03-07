@@ -44,8 +44,6 @@ def local_clients_train_with_dp_one_epoch(num_of_clients, clients_data_list, cli
         train_dataloader = torch.utils.data.DataLoader(clients_data_list[i], batch_size=batch_size, shuffle=False, drop_last = True)
         model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
-
         # print("Client:", i)
 
         for epoch in range(num_epoch):
@@ -58,7 +56,6 @@ def local_clients_train_with_dp_perlayer_one_epoch(num_of_clients, clients_data_
         train_dataloader = torch.utils.data.DataLoader(clients_data_list[i], batch_size=batch_size, shuffle=False, drop_last = True)
         model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
 
@@ -75,7 +72,6 @@ def local_clients_train_with_dp_one_batch(num_of_clients, clients_data_list, cli
         minibatch_loader, microbatch_loader = get_data_loaders_uniform_without_replace(minibatch_size, microbatch_size, iterations)
         model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
         

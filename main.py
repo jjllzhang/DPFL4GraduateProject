@@ -3,6 +3,7 @@ import torch
 from FL.fed_avg.fed_avg import fed_avg
 from FL.fed_avg.fed_avg_with_dp import fed_avg_with_dp
 from FL.fed_avg.fed_avg_with_dp_perlayer import fed_avg_with_dp_perlayer
+from algorithms.train_with_DPSGD import train_with_DPSGD
 from data.utils.get_data import load_dataset
 from models.get_model import get_model
 from FL.utils.train_helper import load_config
@@ -25,12 +26,15 @@ if __name__ == "__main__":
     q_for_batch_size = config['q_for_batch_size']
     max_norm = config['max_norm']
     sigma = config['sigma']
-    delta = config['delta']
+    delta = float(config['delta'])
     device = torch.device(config['device'] if torch.cuda.is_available() else 'cpu')
     algorithm = config['algorithm']
     start_round = config['start_round']
     
-    parameters_string = f"dataset_{dataset}_lr_{learning_rate}_clients_{num_clients}_q_{q_for_batch_size}_norm_{max_norm}_sigma_{sigma}_delta_{delta}"
+    if config['algorithm'] == 'DPSGD':
+        parameters_string = f"dataset_{dataset}_lr_{learning_rate}_q_{q_for_batch_size}_max_norm_{max_norm}_sigma_{sigma}_delta_{delta}"
+    else:
+        parameters_string = f"dataset_{dataset}_lr_{learning_rate}_clients_{num_clients}_q_{q_for_batch_size}_max_norm_{max_norm}_sigma_{sigma}_delta_{delta}"
     save_dir = os.path.join('./saved_states', parameters_string)
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -47,6 +51,8 @@ if __name__ == "__main__":
         test_loss_list, test_acc_list = fed_avg_with_dp(train_data, test_data, test_batch_size, num_clients, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
     elif algorithm == 'fed_avg_with_dp_perlayer':
         test_loss_list, test_acc_list = fed_avg_with_dp_perlayer(train_data, test_data, test_batch_size, num_clients, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
+    elif algorithm == 'DPSGD':
+        test_loss_list, test_acc_list = train_with_DPSGD(train_data, test_data, test_batch_size, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
     else:
         raise NotImplementedError(f"Algorithm {algorithm} is not implemented.")
     
