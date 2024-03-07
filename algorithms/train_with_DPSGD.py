@@ -29,8 +29,8 @@ def train_with_DPSGD(train_data, test_data, test_batchsize, lr, momentum, num_ep
         load_model_and_optimizers(center_model, clients_optimizer_list, load_path)
     
     test_data_loader = torch.utils.data.DataLoader(test_data, batch_size=test_batchsize, shuffle=False)
-    orders = (list(range(2,64)) + [128, 256, 512])
-    rdp = compute_rdp(q, sigma, start_round * num_epoch * math.floor(1/q), orders)
+    # orders = (list(range(2,64)) + [128, 256, 512])
+    # rdp = compute_rdp(q, sigma, start_round * num_epoch * math.floor(1/q), orders)
 
     print("Start Deep Learning with DPSGD")
     test_acc_list = []
@@ -41,9 +41,9 @@ def train_with_DPSGD(train_data, test_data, test_batchsize, lr, momentum, num_ep
         clients_model_list = send_center_model_to_clients(center_model, clients_model_list)
         local_clients_train_with_dp_one_epoch(1, clients_data_list, clients_model_list, clients_criterion_list, clients_optimizer_list, num_epoch, q, device)
         
-        rdp += compute_rdp(q, sigma, num_epoch * math.floor(1/q), orders)
-        epsilon, best_alpha = compute_eps(orders, rdp, delta)
-        print(f"Iteration: {current_round + 1}, Epsilon: {epsilon:.4f}, Best Alpha: {best_alpha}")
+        # rdp += compute_rdp(q, sigma, num_epoch * math.floor(1/q), orders)
+        # epsilon, best_alpha = compute_eps(orders, rdp, delta)
+        # print(f"Iteration: {current_round + 1}, Epsilon: {epsilon:.4f}, Best Alpha: {best_alpha}")
     
         center_model = set_center_model_with_weights(center_model, clients_model_list, weight_of_each_client)
         test_loss, test_acc = validation(center_model, test_data_loader, device)
