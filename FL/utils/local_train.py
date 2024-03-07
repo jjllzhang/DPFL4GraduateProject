@@ -9,9 +9,9 @@ def local_clients_train_without_dp_one_epoch(num_of_clients, clients_data_list, 
     for i in range(num_of_clients):
         batch_size = math.floor(len(clients_data_list[i]) * q)
         train_dataloader = torch.utils.data.DataLoader(clients_data_list[i], batch_size=batch_size, shuffle=False, drop_last = True)
-        model = clients_model_list[i]
+        model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        criterion = clients_criterion_list[i]
+        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
         
@@ -27,9 +27,9 @@ def local_clients_train_without_dp_one_batch(num_of_clients, clients_data_list, 
         microbatch_size = 1
         iterations = 1
         minibatch_loader, microbatch_loader = get_data_loaders_uniform_without_replace(minibatch_size, microbatch_size, iterations)
-        model = clients_model_list[i]
+        model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        criterion = clients_criterion_list[i]
+        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
         
@@ -42,9 +42,9 @@ def local_clients_train_with_dp_one_epoch(num_of_clients, clients_data_list, cli
     for i in range(num_of_clients):
         batch_size = math.floor(len(clients_data_list[i]) * q)
         train_dataloader = torch.utils.data.DataLoader(clients_data_list[i], batch_size=batch_size, shuffle=False, drop_last = True)
-        model = clients_model_list[i]
+        model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        criterion = clients_criterion_list[i]
+        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
 
@@ -56,9 +56,9 @@ def local_clients_train_with_dp_perlayer_one_epoch(num_of_clients, clients_data_
     for i in range(num_of_clients):
         batch_size = math.floor(len(clients_data_list[i]) * q)
         train_dataloader = torch.utils.data.DataLoader(clients_data_list[i], batch_size=batch_size, shuffle=False, drop_last = True)
-        model = clients_model_list[i]
+        model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        criterion = clients_criterion_list[i]
+        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
 
@@ -73,9 +73,9 @@ def local_clients_train_with_dp_one_batch(num_of_clients, clients_data_list, cli
         microbatch_size = 1
         iterations = 1
         minibatch_loader, microbatch_loader = get_data_loaders_uniform_without_replace(minibatch_size, microbatch_size, iterations)
-        model = clients_model_list[i]
+        model = clients_model_list[i].to(device)
         optimizer = clients_optimizer_list[i]
-        criterion = clients_criterion_list[i]
+        optimizer = type(optimizer)(model.parameters(), **optimizer.defaults)
 
         # print("Client:", i)
         
