@@ -4,7 +4,7 @@ test_batch_size: 256 # 测试批量大小
 learning_rate: 0.002 # 学习率
 
 # 训练开始所在轮数
-start_round: 200
+start_round: 400
 
 # 训练周期
 epochs: 1
