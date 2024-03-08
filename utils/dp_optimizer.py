@@ -112,6 +112,35 @@ def make_optimizer_class(cls):
             super().step(*args, **kwargs)
 
 
+        def microbatch_step_auto(self):
+            total_norm = 0.
+            for group in self.param_groups:
+                for param in group['params']:
+                    if param.requires_grad:
+                        total_norm += param.grad.data.norm(2).item() ** 2
+
+            total_norm = total_norm ** 0.5
+            clip_coef = 1 / (total_norm + 1e-2)
+
+            for group in self.param_groups:
+                for param, accum_grad in zip(group['params'], group['accum_grads']):
+                    if param.requires_grad:
+                        accum_grad.add_(param.grad.data.mul(clip_coef))
+
+            return total_norm
+
+
+        def step_dp_auto(self, *args, **kwargs):
+            for group in self.param_groups:
+                for param, accum_grad in zip(group['params'], group['accum_grads']):
+                    if param.requires_grad:
+                        param.grad.data = accum_grad.clone()
+                        param.grad.data.add_(self.noise_multiplier * torch.randn_like(param.grad.data))
+                        param.grad.data.mul_(self.microbatch_size / self.minibatch_size)
+
+            super().step(*args, **kwargs)
+
+
     return DPOptimizerClass
 
 DPAdam_Optimizer = make_optimizer_class(Adam)
