@@ -28,7 +28,7 @@ sigma: 1.1 # 隐私保护参数σ
 delta: 1e-5 # 隐私保护参数δ, 通常设置得很小
 
 device: cuda # 训练设备，cpu或cuda
-algorithm: fed_avg_with_dp_auto # 使用的算法，如fed_avg, fed_avg_with_dp, fed_avg_with_dp_perlayer, fed_avg_with_dp_auto, DPSGD
+algorithm: fed_avg_with_dp # 使用的算法，如fed_avg, fed_avg_with_dp, fed_avg_with_dp_perlayer, fed_avg_with_dp_auto, DPSGD
 
 # 模型加载路径
 save_dir: ./saved_states
