@@ -11,7 +11,7 @@ import torch
 import math
 
 
-def fed_avg_with_dp(train_data, test_data, test_batchsize, num_of_clients, lr, momentum, num_epoch, iters, alpha, seed, q, max_norm, sigma, delta, model, device, start_round=0, save_dir=None):
+def fed_avg_with_dp_with_shuffler(train_data, test_data, test_batchsize, num_of_clients, lr, momentum, num_epoch, iters, alpha, seed, q, max_norm, sigma, delta, model, device, start_round=0, save_dir=None):
     if save_dir is None:
         save_dir = os.path.join(os.getcwd(), 'saved_states')
     if not os.path.exists(save_dir):
@@ -21,7 +21,7 @@ def fed_avg_with_dp(train_data, test_data, test_batchsize, num_of_clients, lr, m
     clients_model_list, clients_optimizer_list, clients_criterion_list = create_clients_with_dp(num_of_clients, lr, model, momentum, max_norm, sigma, batchsize_of_each_client)
     center_model = model.to(device)
     
-    load_path = f"{save_dir}/model_optimizers_state_round_{start_round}_fed_avg_with_dp.pt"
+    load_path = f"{save_dir}/model_optimizers_state_round_{start_round}_fed_avg_with_dp_with_shuffler.pt"
     if start_round > 0 and os.path.exists(load_path):
         load_model_and_optimizers(center_model, clients_optimizer_list, load_path)
 
@@ -29,7 +29,7 @@ def fed_avg_with_dp(train_data, test_data, test_batchsize, num_of_clients, lr, m
     # orders = (list(range(2,64)) + [128, 256, 512])
     # rdp = compute_rdp(q, sigma, start_round * num_epoch * math.floor(1/q), orders)
 
-    print("Start Federated Learning with DP")
+    print("Start Federated Learning with DP_with_shuffler")
     test_acc_list = []
     test_loss_list = []
     for i in range(iters):
@@ -50,7 +50,7 @@ def fed_avg_with_dp(train_data, test_data, test_batchsize, num_of_clients, lr, m
         test_loss_list.append(test_loss)
         
         if (current_round + 1) % 100 == 0:
-            save_path = f"{save_dir}/model_optimizers_state_round_{current_round + 1}_fed_avg_with_dp.pt"
+            save_path = f"{save_dir}/model_optimizers_state_round_{current_round + 1}_fed_avg_with_dp_with_shuffler.pt"
             save_model_and_optimizers(center_model, clients_optimizer_list, save_path)
 
     record = [test_loss_list, test_acc_list]

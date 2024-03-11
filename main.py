@@ -4,6 +4,7 @@ from FL.fed_avg.fed_avg import fed_avg
 from FL.fed_avg.fed_avg_with_dp import fed_avg_with_dp
 from FL.fed_avg.fed_avg_with_dp_auto import fed_avg_with_dp_auto
 from FL.fed_avg.fed_avg_with_dp_perlayer import fed_avg_with_dp_perlayer
+from FL.fed_avg.fed_avg_with_dp_with_shuffler import fed_avg_with_dp_with_shuffler
 from algorithms.train_with_DPSGD import train_with_DPSGD
 from data.utils.get_data import load_dataset
 from models.get_model import get_model
@@ -54,6 +55,8 @@ if __name__ == "__main__":
         test_loss_list, test_acc_list = fed_avg_with_dp_perlayer(train_data, test_data, test_batch_size, num_clients, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
     elif algorithm == 'fed_avg_with_dp_auto':
         test_loss_list, test_acc_list = fed_avg_with_dp_auto(train_data, test_data, test_batch_size, num_clients, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
+    elif algorithm == 'fed_avg_with_dp_with_shuffler':
+        test_loss_list, test_acc_list = fed_avg_with_dp_with_shuffler(train_data, test_data, test_batch_size, num_clients, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
     elif algorithm == 'DPSGD':
         test_loss_list, test_acc_list = train_with_DPSGD(train_data, test_data, test_batch_size, learning_rate, momentum, epochs, iters, alpha, seed, q_for_batch_size, max_norm, sigma, delta, model, device, start_round, save_dir)
     else:

@@ -24,11 +24,11 @@ seed: 1 # 随机种子，保证实验可重现性
 # 以下是关于隐私保护参数的部分
 q_for_batch_size: 0.01 # 数据采样率
 max_norm: 1.0 # 用于梯度裁剪的最大范数
-sigma: 6.0 # 隐私保护参数σ 参考值：1.0, 1.1
+sigma: 1.0 # 隐私保护参数σ 参考值：1.0, 1.1
 delta: 1e-5 # 隐私保护参数δ, 通常设置得很小
 
 device: cuda # 训练设备，cpu或cuda
-algorithm: fed_avg_with_dp_perlayer # 使用的算法，如fed_avg, fed_avg_with_dp, fed_avg_with_dp_perlayer, fed_avg_with_dp_auto, DPSGD
+algorithm: fed_avg_with_dp_with_shuffler # 使用的算法，如fed_avg, fed_avg_with_dp, fed_avg_with_dp_perlayer, fed_avg_with_dp_auto, DPSGD
 
 # 模型加载路径
 save_dir: ./saved_states
