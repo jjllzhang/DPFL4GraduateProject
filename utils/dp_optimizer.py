@@ -149,7 +149,7 @@ DPSGD_Optimizer = make_optimizer_class(SGD)
 DPRMSprop_Optimizer = make_optimizer_class(RMSprop)
 
 def get_dp_optimizer(lr, momentum, C_t, sigma, batch_size, model):
-    optimizer = DPAdam_Optimizer(
+    optimizer = DPSGD_Optimizer(
         l2_norm_clip=C_t,
         noise_multiplier=sigma,
         minibatch_size=batch_size,
