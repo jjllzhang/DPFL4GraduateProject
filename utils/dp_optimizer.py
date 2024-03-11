@@ -120,7 +120,7 @@ def make_optimizer_class(cls):
                         total_norm += param.grad.data.norm(2).item() ** 2
 
             total_norm = total_norm ** 0.5
-            clip_coef = 1 / (total_norm + 1e-2)
+            clip_coef = 1 / (total_norm + 1e-3)
 
             for group in self.param_groups:
                 for param, accum_grad in zip(group['params'], group['accum_grads']):
