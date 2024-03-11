@@ -96,6 +96,8 @@ if __name__ == '__main__':
         eps_list, opt_order_list = cal_eps_FL_with_dp_per_client(epochs, q, sigma, delta, orders)
     elif config['algorithm'] == 'fed_avg_with_dp_perlayer':
         eps_list, opt_order_list = cal_eps_FL_with_dp_perlayer_clip_per_client(epochs, q, sigma, delta, orders)
+    elif config['algorithm'] == 'fed_avg_with_dp_auto':
+        eps_list, opt_order_list = cal_eps_FL_with_dp_per_client(epochs, q, sigma, delta, orders)
     else:
         raise ValueError("Unsupported algorithm name.")
     

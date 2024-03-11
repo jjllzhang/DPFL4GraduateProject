@@ -2,6 +2,10 @@ import math
 from scipy.special import comb
 from privacy_analysis.rdp_convert_dp import compute_eps
 
+
+## Using the second calculation version of ShuffleDP_FMT_ver to calculate privacy budget can get the tightest bound for shufflerDP
+## to get similar final delta bound, notice to adjust delta0 and delta values
+
 class ShufflerDP:
     def __init__(self, eps0=1, delta0=1e-5, delta=1e-5, num_of_clients=100) -> None:
         self.eps0 = eps0
@@ -117,15 +121,15 @@ class ShuffleDP_GDDSK_ver():
 
 
 def test():
-    s = ShuffleDP_FMT_ver(eps0=1, delta0=1e-5, delta=1e-5, num_of_clients=100)
+    s = ShuffleDP_FMT_ver(eps0=2, delta0=1e-7, delta=1e-7, num_of_clients=10)
     print(s.calculate_eps())
     print(s.calculate_delta())
     print(s.calculate_eps_ver2())
     print(s.calculate_delta_ver2())
     print("Test RDP")
-    s2 = ShuffleDP_GDDSK_ver(alpha=100, eps0=1, delta=1e-5, num_of_clients=10)
-    print(compute_eps(orders=[100], rdp=[s2.calculate_renyi_eps_ver1()], delta=1e-5))
-    print(compute_eps(orders=[100], rdp=[s2.calculate_renyi_eps_ver2()], delta=1e-5))
-    print(compute_eps(orders=[100], rdp=[s2.calculate_renyi_eps_RDP()], delta=1e-5))
+    s2 = ShuffleDP_GDDSK_ver(alpha=10, eps0=1.5, delta=1e-5, num_of_clients=10)
+    print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_ver1()], delta=1e-5))
+    print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_ver2()], delta=1e-5))
+    print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_RDP()], delta=1e-5))
 
 test()
