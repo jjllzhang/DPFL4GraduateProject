@@ -42,7 +42,7 @@ def log_results(config, test_loss_list, test_acc_list):
 
 
 
-def log_epsilon_opt_order(config, epsilon_list, opt_order_list):
+def log_epsilon_opt_order_delta(config, epsilon_list, opt_order_list, delta_list):
     # 保留原始配置的副本以进行修改
     config_modified = config.copy()
     
@@ -65,7 +65,7 @@ def log_epsilon_opt_order(config, epsilon_list, opt_order_list):
     
     # 使用追加模式打开文件，以便在文件存在时添加内容而不是覆盖
     with open(filepath, 'a', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['round', 'epsilon', 'opt_order']
+        fieldnames = ['round', 'epsilon', 'delta', 'opt_order']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # 如果文件不存在，写入表头
@@ -75,5 +75,5 @@ def log_epsilon_opt_order(config, epsilon_list, opt_order_list):
         # 根据start_round调整round的起始值
         start_round = config['start_round'] + 1
         
-        for round, (epsilon, opt_order) in enumerate(zip(epsilon_list, opt_order_list), start=start_round):
-            writer.writerow({'round': round, 'epsilon': epsilon, 'opt_order': opt_order})
+        for round, (epsilon, opt_order, delta) in enumerate(zip(epsilon_list, opt_order_list, delta_list), start=start_round):
+            writer.writerow({'round': round, 'epsilon': epsilon, 'delta': delta, 'opt_order': opt_order})

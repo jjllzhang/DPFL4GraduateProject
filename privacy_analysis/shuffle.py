@@ -131,5 +131,3 @@ def test():
     print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_ver1()], delta=1e-5))
     print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_ver2()], delta=1e-5))
     print(compute_eps(orders=[10], rdp=[s2.calculate_renyi_eps_RDP()], delta=1e-5))
-
-test()
