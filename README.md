@@ -1,17 +1,76 @@
-# DPFL
+# Differential Privacy and Shuffler in Federated Learning System
 
-This repo is created for my graduate project
+This project as my graduate project, aims to enhance the privacy protection capabilities of federated learning systems by integrating Differential Privacy and the Shuffler mechanism. It's designed for distributed machine learning scenarios with stringent privacy requirements.
 
-出现测试集准确率上升但损失（loss）也增大且震荡的情况，并不一定直接说明模型过拟合。过拟合是指模型在训练集上表现很好，但在未见过的数据（如验证集或测试集）上表现较差的现象。这种情况下，模型捕捉到了训练数据中的噪声和异常值，而没有学习到数据的真实分布，导致泛化能力下降。
+## Motivation and Background
 
-然而，测试集准确率上升但 loss 增大且震荡可能由多种因素引起，包括但不限于：
+In the era of ubiquitous data, protecting individual privacy has become a significant challenge. Although federated learning offers a way to conduct machine learning tasks without sharing raw data among participants, it still faces potential privacy leakage risks. This project introduces Differential Privacy and the Shuffler mechanism to federated learning to minimize these risks and enhance the system's overall privacy protection.
 
-1. **数据分布不均匀（Non-IID）**：在联邦学习环境中，如果客户端之间的数据分布高度异质，模型可能在某些客户端上表现得很好，而在其他客户端上表现不佳。这可能导致全局模型在某些测试数据上预测准确率提高，但由于预测的不确定性增加，整体损失也可能增大。
+## Installation Guide
 
-2. **模型聚合策略问题**：不同的模型更新和聚合策略可能导致模型的权重更新不均匀，引起全局模型在某些方面表现改善（如分类准确率提升），但总体损失函数表现不稳定。
+This project requires Python 3.6 or higher. Follow these steps to install the necessary dependencies:
 
-3. **学习率调整不当**：不恰当的学习率设置可能导致模型在训练过程中难以稳定下来，造成损失函数震荡，即使准确率有所提高。
+```bash
+git clone https://github.com/jjllzhang/DPFL4GraduateProject.git
+cd DPFL4GraduateProject
+conda env create -f environment.yml
+conda activate DPFL
+```
 
-4. **标签噪声或数据质量问题**：如果测试集中存在标签错误或数据质量问题，模型可能在这些错误的标签上做出正确预测（从而提高准确率），但这会导致损失函数计算出较高的值，因为模型的预测与错误的标签不一致。
+## Usage Example
 
-因此，虽然过拟合可能导致模型在训练集上表现优异而在测试集上表现下降，但测试集准确率上升与损失增大并不直接等同于过拟合。要准确判断是否过拟合，需要更全面地分析模型在训练集和测试集（或验证集）上的表现，包括准确率、损失值以及其他泛化能力指标。
+Here's a simple example of how to start a federated learning task with differential privacy and Shuffler mechanism enabled:
+
+* First check the parameters in [`config.yml`](./config.yml)
+* Modify the parameters as you want
+* Then run the following bash to start training the model
+```bash
+python main.py
+```
+
+## Technical Architecture and Key Technologies
+
+
+### Overview
+
+Todo: show the overall architecture
+
+### Differential Privacy
+implement the following:
+* Perlayer DP
+* Auto DP
+* DP with Shuffler
+
+Differential Privacy (DP) ensures that the removal or addition of a single database item does not significantly affect the outcome of any analysis, providing strong privacy guarantees for individuals' data.
+
+### Shuffler Mechanism
+The Shuffler mechanism adds an additional layer of privacy by randomly permuting data points. This process helps in breaking the link between the data and its source, further enhancing privacy.
+
+### Federated Learning
+The core of our project, Federated Learning, is a distributed machine learning approach that enables multiple participants to collaboratively learn a shared model while keeping their data local.
+
+
+
+## Features
+
+- **Privacy-Preserving**: Implements 3 kinds of Differential Privacy Federated Learning and Shuffler mechanisms.
+- **Scalability**: Designed to efficiently handle large-scale federated learning tasks.
+- **Flexibility**: Supports various federated learning scenarios and configurations.
+- **Privacy-Accountant**: Uses Renyi Differential Privacy to account for the privacy loss to get tighter bounds
+
+## Performance Metrics and Advantages
+
+The system has been rigorously tested under different conditions, demonstrating significant improvements in privacy protection without compromising learning efficiency.
+
+Todo: show performance results
+
+## Copyright and License
+
+This project is licensed under the Apache License - see the [`LICENSE`](./LICENSE) file for details.
+
+## Acknowledgments
+
+- A special thanks to [@JeffffffFu](https://github.com/JeffffffFu) whose DP videos uploaded at [BiliBili](https://bilibili.com) and codes implemention help me lot.
+- Gratitude to my lab who provides me a server for experimental test.
+- Appreciation for the open-source community for the tools and libraries that made this project possible.
+
