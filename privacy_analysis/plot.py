@@ -1,54 +1,31 @@
+import pandas as pd
 import matplotlib.pyplot as plt
-import csv
-import os
-from FL.utils.train_helper import load_config
 
-plt.rcParams.update({
-    "text.usetex": True,
-    "font.family": "serif",
-    "font.serif": ["Palatino"],
-})
+# 定义一个函数用来读取数据并绘制图形
+def plot_from_csv(csv_path, label):
+    data = pd.read_csv(csv_path)
+    plt.plot(data['round'], data['epsilon'], label=label)
 
-def reconstruct_filename_from_config(config):
-    # 移除不需要记录在文件名中的配置项
-    keys_to_remove = ['device', 'epochs', 'momentum', 'seed', 'save_dir', 'start_round', 'test_batch_size', 'iters', 'learning_rate', 'num_clients', 'alpha', 'max_norm', 'dataset']
-    for key in keys_to_remove:
-        config.pop(key, None)
-    
-    # 生成文件名
-    config_items = [f"{key}_{value}" for key, value in config.items()]
-    filename = f"{'_'.join(config_items)}.csv"
-    filepath = os.path.join('./log/', filename)
-    
-    return filepath
+# 曲线的名字
+labels = ['Without Shuffler, sigma=1.0', 'Without Shuffler, sigma=1.1', 'With Shuffler, sigma=1.0']
 
-# 假设这是当初写入文件时使用的配置字典
-CONFIG_PATH = "../config.yml"
-config_used_for_logging =  load_config(CONFIG_PATH)
+# 读取文件并绘制曲线
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[0])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[1])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv', labels[2])
 
-
-# 使用相同的配置重建文件名
-filepath = reconstruct_filename_from_config(config_used_for_logging.copy())
-
-# 初始化两个空列表来存储数据
-rounds = []
-epsilons = []
-opt_orders = []
-
-# 读取CSV文件
-with open(filepath, 'r') as csvfile:
-    csvreader = csv.DictReader(csvfile)
-    for row in csvreader:
-        rounds.append(int(row['round']))
-        epsilons.append(float(row['epsilon']))
-
-# 绘制 epsilon 随 round 变化的图像
-plt.figure(figsize=(8, 4))
-plt.plot(rounds, epsilons, marker='o', linestyle='-', color='b', label=r'$\epsilon$', linewidth=1, markersize=5)
-plt.title(r'Epsilon Changes Over Rounds')
-plt.xlabel(r'Round')
-plt.ylabel(r'Epsilon')
-plt.grid(True)
+# 添加图例
 plt.legend()
-plt.tight_layout()
-plt.savefig('./log/epsilon_changes.pdf', format='pdf', dpi=1200)
+
+# 设置对数尺度的x轴
+plt.xscale('log')
+
+# 设置坐标轴标签和标题
+plt.xlabel('rounds')
+plt.ylabel('ε')
+plt.title('Privacy loss with δ = 1e-5')
+
+# 显示图形
+plt.show()
+
+plt.savefig('./log/privacy_loss_comparsion.png', dpi=300)
