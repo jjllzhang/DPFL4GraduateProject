@@ -64,7 +64,13 @@ The core of our project, Federated Learning, is a distributed machine learning a
 
 The system has been rigorously tested under different conditions, demonstrating significant improvements in privacy protection without compromising learning efficiency.
 
-TODO: show performance results
+### Test Accurary Comparision
+
+TODO: show acc comparisions
+
+### Privacy Loss Comparision
+
+![privacy loss comparision](./privacy_analysis/log/privacy_loss_comparsion.png)
 
 ## Copyright and License
 
@@ -72,6 +78,6 @@ This project is licensed under the Apache License - see the [`LICENSE`](./LICENS
 
 ## Acknowledgments
 
-- A special thanks to [@JeffffffFu](https://github.com/JeffffffFu) whose DP videos uploaded at [BiliBili](https://bilibili.com) and codes implemention help me lot.
+- A special thanks to [@JeffffffFu](https://github.com/JeffffffFu) whose DP videos uploaded at [Bilibili](https://bilibili.com) and codes implemention help me lot.
 - Gratitude to my lab who provides me a server for experimental test.
 - Appreciation for the open-source community for the tools and libraries that made this project possible.
