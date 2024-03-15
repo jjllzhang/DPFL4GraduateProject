@@ -60,41 +60,45 @@ def make_optimizer_class(cls):
             super().step(*args, **kwargs)
 
         def compute_L2norm_perlayer(self):
-            num_perplayer = len(self.param_groups)
-            perlayer_norm = np.zeros(num_perplayer, dtype=np.float64, order='C')
-            for i, group in enumerate(self.param_groups):
+            perlayer_norm = []
+            for group in self.param_groups:
                 layer_norm = 0.0
                 for param in group['params']:
                     if param.requires_grad:
                         layer_norm += param.grad.data.norm(2).item() ** 2
-                perlayer_norm[i] = layer_norm ** 0.5
+                perlayer_norm.append(layer_norm ** 0.5)
 
             return perlayer_norm
         
         def microbatch_step_perlayer(self):
             num_perlayer = len(self.param_groups)
             perlayer_norm = self.compute_L2norm_perlayer()
-            clip_coef = np.zeros(num_perlayer, dtype=np.float64, order='C')
+            clip_coef = []
             l2_norm_clip_perlayer = []
-            total_l2norm_square = np.sum(np.square(perlayer_norm))
+            total_l2norm_square = 0.0
+            for group in self.param_groups:
+                for param in group['params']:
+                    if param.requires_grad:
+                        total_l2norm_square += param.grad.data.norm(2).item() ** 2
+
             for norm in perlayer_norm:
                 proposition = (norm ** 2) / total_l2norm_square
                 clip_threshold = proposition ** 0.5 * self.l2_norm_clip
                 l2_norm_clip_perlayer.append(clip_threshold)
 
             for i in range(num_perlayer):
-                clip_coef[i] = min(l2_norm_clip_perlayer[i] / (perlayer_norm[i] + 1e-6), 1.)
+                clip_coef.append(min(l2_norm_clip_perlayer[i] / (perlayer_norm[i] + 1e-6), 1.0))
 
             for i, group in enumerate(self.param_groups):
-                for param in group['params']:
+                for param, accum_grad in zip(group['params'], group['accum_grads']):
                     if param.requires_grad:
-                        param.grad.data.mul_(clip_coef[i])
+                        accum_grad.add_(param.grad.data.mul(clip_coef[i]))
 
             return perlayer_norm
         
         def step_dp_perlayer(self, *args, **kwargs):
             perlayer_norm = self.compute_L2norm_perlayer()
-            total_l2norm_square = np.sum(np.square(perlayer_norm))
+            total_l2norm_square = sum( x ** 2 for x in perlayer_norm)
             l2_norm_clip_perlayer = []
 
             for norm in perlayer_norm:
