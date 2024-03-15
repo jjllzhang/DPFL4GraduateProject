@@ -75,11 +75,7 @@ def make_optimizer_class(cls):
             perlayer_norm = self.compute_L2norm_perlayer()
             clip_coef = []
             l2_norm_clip_perlayer = []
-            total_l2norm_square = 0.0
-            for group in self.param_groups:
-                for param in group['params']:
-                    if param.requires_grad:
-                        total_l2norm_square += param.grad.data.norm(2).item() ** 2
+            total_l2norm_square = sum( x ** 2 for x in perlayer_norm)
 
             for norm in perlayer_norm:
                 proposition = (norm ** 2) / total_l2norm_square
