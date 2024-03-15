@@ -6,9 +6,79 @@ This project as my graduate project, aims to enhance the privacy protection capa
 
 In the era of ubiquitous data, protecting individual privacy has become a significant challenge. Although federated learning offers a way to conduct machine learning tasks without sharing raw data among participants, it still faces potential privacy leakage risks. This project introduces Differential Privacy and the Shuffler mechanism to federated learning to minimize these risks and enhance the system's overall privacy protection.
 
+## Folder Directory Structure
+
+The folder directory structure of LobeChat is as follows:
+
+```bash
+.
+├── algorithms
+│   ├── DPSGD.py
+│   └── train_with_DPSGD.py
+├── data
+│   ├── cifar-10-batches-py
+│   ├── FashionMNIST
+│   ├── MNIST
+│   └── utils
+│       ├── custom_tensor_dataset.py
+│       ├── dirichlet_nonIID_data.py
+│       ├── get_data.py
+│       └── sampling.py
+├── FL
+│   ├── fed_avg
+│   │   ├── fed_avg.py
+│   │   ├── fed_avg_with_dp_auto.py
+│   │   ├── fed_avg_with_dp_perlayer.py
+│   │   ├── fed_avg_with_dp.py
+│   │   └── fed_avg_with_dp_with_shuffler.py
+│   └── utils
+│       ├── create_client.py
+│       ├── local_train.py
+│       ├── log_helper.py
+│       ├── train_helper.py
+│       └── update_model.py
+├── imgs
+│   └── architecture.png
+├── log
+├── models
+│   ├── CIFAR10.py
+│   ├── FMNIST.py
+│   ├── get_model.py
+│   └── MNIST.py
+├── privacy_analysis
+│   ├── log
+│   │   ├── privacy_loss_comparsion.png
+│   │   ├── q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv
+│   │   ├── q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv
+│   │   └── q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp.csv
+│   ├── compute_dp_sgd.py
+│   ├── compute_rdp.py
+│   ├── get_MaxSigma_or_MaxSteps.py
+│   ├── plot.py
+│   ├── rdp_convert_dp.py
+│   ├── shuffle.py
+│   └── simulation_privacy_loss.py
+├── saved_states
+│   ├── dataset_FMNIST_lr_0.001_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
+│   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
+│   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.1_delta_1e-05
+│   └── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_1.0_sigma_1.0_delta_1e-05
+├── train_and_validation
+│   ├── train.py
+│   ├── train_with_dp.py
+│   └── validation.py
+├── utils
+│   └── dp_optimizer.py
+├── config.yml
+├── environment.yml
+├── LICENSE
+├── main.py
+└── README.md
+```
+
 ## Installation Guide
 
-This project requires Python 3.6 or higher. Follow these steps to install the necessary dependencies:
+This project requires Python 3.9 or higher. Follow these steps to install the necessary dependencies:
 
 ```bash
 git clone https://github.com/jjllzhang/DPFL4GraduateProject.git
