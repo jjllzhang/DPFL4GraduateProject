@@ -78,7 +78,7 @@ def make_optimizer_class(cls):
             total_l2norm_square = sum( x ** 2 for x in perlayer_norm)
 
             for norm in perlayer_norm:
-                proposition = (norm ** 2) / total_l2norm_square
+                proposition = (norm ** 2) / (total_l2norm_square + 1e-6)
                 clip_threshold = proposition ** 0.5 * self.l2_norm_clip
                 l2_norm_clip_perlayer.append(clip_threshold)
 
@@ -98,7 +98,7 @@ def make_optimizer_class(cls):
             l2_norm_clip_perlayer = []
 
             for norm in perlayer_norm:
-                proposition = (norm ** 2) / total_l2norm_square
+                proposition = (norm ** 2) / (total_l2norm_square + 1e-6)
                 clip_threshold = proposition ** 0.5 * self.l2_norm_clip
                 l2_norm_clip_perlayer.append(clip_threshold)
 
