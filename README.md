@@ -1,21 +1,21 @@
-# Differential Privacy and Shuffler in Federated Learning System
+# 💠 Differential Privacy and Shuffler in Federated Learning System
 
-This project as my graduate project, aims to enhance the privacy protection capabilities of federated learning systems by integrating Differential Privacy and the Shuffler mechanism. It's designed for distributed machine learning scenarios with stringent privacy requirements.
+This graduate project aims to enhance the privacy protection capabilities of federated learning systems by integrating Differential Privacy and the Shuffler mechanism, designed for distributed machine learning scenarios with stringent privacy requirements.
 
-## Motivation and Background
+## 🌓 Motivation and Background
 
-In the era of ubiquitous data, protecting individual privacy has become a significant challenge. Although federated learning offers a way to conduct machine learning tasks without sharing raw data among participants, it still faces potential privacy leakage risks. This project introduces Differential Privacy and the Shuffler mechanism to federated learning to minimize these risks and enhance the system's overall privacy protection.
+Protecting individual privacy in the era of ubiquitous data is a significant challenge. Federated learning offers a way to conduct machine learning tasks without sharing raw data among participants but still faces potential privacy leakage risks. This project introduces Differential Privacy and the Shuffler mechanism to minimize these risks and enhance the system's overall privacy protection.
 
-## Folder Directory Structure
+## 💅 Folder Directory Structure
 
-The folder directory structure of LobeChat is as follows:
+The LobeChat folder directory structure is organized as follows:
 
 ```bash
 .
-├── algorithms
+├── algorithms  ## Houses the implementation of the Differential Privacy Stochastic Gradient Descent (DPSGD) algorithm and the training script utilizing DPSGD.
 │   ├── DPSGD.py
 │   └── train_with_DPSGD.py
-├── data
+├── data        ## Contains datasets (e.g., CIFAR-10, Fashion MNIST, MNIST) and utility scripts for data handling and processing.
 │   ├── cifar-10-batches-py
 │   ├── FashionMNIST
 │   ├── MNIST
@@ -24,7 +24,7 @@ The folder directory structure of LobeChat is as follows:
 │       ├── dirichlet_nonIID_data.py
 │       ├── get_data.py
 │       └── sampling.py
-├── FL
+├── FL          ## Dedicated to Federated Learning (FL) scripts, including various federated averaging implementations with differential privacy integrated.
 │   ├── fed_avg
 │   │   ├── fed_avg.py
 │   │   ├── fed_avg_with_dp_auto.py
@@ -40,12 +40,12 @@ The folder directory structure of LobeChat is as follows:
 ├── imgs
 │   └── architecture.png
 ├── log
-├── models
+├── models      ## Comprises model definitions for different datasets used in the project.
 │   ├── CIFAR10.py
 │   ├── FMNIST.py
 │   ├── get_model.py
 │   └── MNIST.py
-├── privacy_analysis
+├── privacy_analysis    ## Focused on the privacy analysis of the implemented algorithms, with scripts to compute and visualize privacy metrics.
 │   ├── log
 │   │   ├── privacy_loss_comparsion.png
 │   │   ├── q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv
@@ -58,25 +58,25 @@ The folder directory structure of LobeChat is as follows:
 │   ├── rdp_convert_dp.py
 │   ├── shuffle.py
 │   └── simulation_privacy_loss.py
-├── saved_states
+├── saved_states        ## Directory for storing saved model states or training checkpoints.
 │   ├── dataset_FMNIST_lr_0.001_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
 │   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
 │   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.1_delta_1e-05
 │   └── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_1.0_sigma_1.0_delta_1e-05
-├── train_and_validation
+├── train_and_validation    ## Contains scripts for model training and validation in a federated learning setting.
 │   ├── train.py
 │   ├── train_with_dp.py
 │   └── validation.py
 ├── utils
 │   └── dp_optimizer.py
-├── config.yml
-├── environment.yml
-├── LICENSE
-├── main.py
-└── README.md
+├── config.yml          ## Project configuration settings.
+├── environment.yml     ## Specifies the project's environment requirements.
+├── LICENSE             ## Project's license file.
+├── main.py             ## The main entry point of the project.
+└── README.md           ## Documentation for the project.
 ```
 
-## Installation Guide
+## 🍳 Installation Guide
 
 This project requires Python 3.9 or higher. Follow these steps to install the necessary dependencies:
 
@@ -87,67 +87,69 @@ conda env create -f environment.yml
 conda activate DPFL
 ```
 
-## Usage Example
+## 🧩 Usage Example
 
-Here's a simple example of how to start a federated learning task with differential privacy and Shuffler mechanism enabled:
+Here's a simple example of how to start a federated learning task with differential privacy and the Shuffler mechanism enabled:
 
-- First check the parameters in [`config.yml`](./config.yml)
-- Modify the parameters as you want
-- Then run the following bash to start training the model
+- First, check the parameters in [`config.yml`](./config.yml).
+- Modify the parameters as desired.
+- Then, run the following command to start training the model:
 
 ```bash
 python main.py
 ```
 
-## Technical Architecture and Key Technologies
+## 📊 Technical Architecture and Key Technologies
 
-### Architecture overview
+### 🔒 Architecture Overview
+
+The system architecture is designed to ensure privacy protection while maintaining efficiency in federated learning.
 
 ![The system architecture](./imgs/architecture.png)
 
-### Differential Privacy
+### 🔐 Differential Privacy
 
-implement the following:
+The project implements the following types of Differential Privacy Federated Learning:
 
-- Perlayer DP
+- Per-layer DP
 - Auto DP
 - DP with Shuffler
 
-Differential Privacy (DP) ensures that the removal or addition of a single database item does not significantly affect the outcome of any analysis, providing strong privacy guarantees for individuals' data.
+Differential Privacy ensures that the removal or addition of a single database item does not significantly affect the outcome of any analysis, providing strong privacy guarantees for individuals' data.
 
-### Shuffler Mechanism
+### 🔄 Shuffler Mechanism
 
-The Shuffler mechanism adds an additional layer of privacy by randomly permuting data points. This process helps in breaking the link between the data and its source, further enhancing privacy.
+The Shuffler mechanism adds an additional layer of privacy by randomly permuting data points, helping to break the link between the data and its source and further enhancing privacy.
 
-### Federated Learning
+### 🌐 Federated Learning
 
-The core of our project, Federated Learning, is a distributed machine learning approach that enables multiple participants to collaboratively learn a shared model while keeping their data local.
+The core of the project, Federated Learning, is a distributed machine learning approach that enables multiple participants to collaboratively learn a shared model while keeping their data local.
 
-## Features
+## 💡 Features
 
 - **Privacy-Preserving**: Implements 3 kinds of Differential Privacy Federated Learning and Shuffler mechanisms.
 - **Scalability**: Designed to efficiently handle large-scale federated learning tasks.
 - **Flexibility**: Supports various federated learning scenarios and configurations.
-- **Privacy-Accountant**: Uses Renyi Differential Privacy to account for the privacy loss to get tighter bounds
+- **Privacy-Accountant**: Uses Renyi Differential Privacy to account for privacy loss and get tighter bounds.
 
-## Performance Metrics and Advantages
+## 📈 Performance Metrics and Advantages
 
 The system has been rigorously tested under different conditions, demonstrating significant improvements in privacy protection without compromising learning efficiency.
 
-### Test Accurary Comparision
+### ✔️ Test Accuracy Comparison
 
-TODO: show acc comparisions
+TODO: Show accuracy comparisons.
 
-### Privacy Loss Comparision
+### 💸 Privacy Budget Comparison
 
-![privacy loss comparision](./privacy_analysis/log/privacy_loss_comparsion.png)
+![Privacy budget comparison](./privacy_analysis/log/privacy_loss_comparsion.png)
 
-## Copyright and License
+## 📜 Copyright and License
 
 This project is licensed under the Apache License - see the [`LICENSE`](./LICENSE) file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- A special thanks to [@JeffffffFu](https://github.com/JeffffffFu) whose DP videos uploaded at [Bilibili](https://bilibili.com) and codes implemention help me lot.
-- Gratitude to my lab who provides me a server for experimental test.
+- Special thanks to [@JeffffffFu](https://github.com/JeffffffFu) for his [DP videos](https://space.bilibili.com/80356866/video) on Bilibili and for his code implementation, which helped significantly.
+- Gratitude to the lab for providing a server for experimental testing.
 - Appreciation for the open-source community for the tools and libraries that made this project possible.
