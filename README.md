@@ -39,7 +39,7 @@ The LobeChat folder directory structure is organized as follows:
 │       └── update_model.py
 ├── imgs
 │   └── architecture.png
-├── log
+├── log  ## Log the test_loss and test_accuracy for models of different fed algorithms.
 ├── models      ## Comprises model definitions for different datasets used in the project.
 │   ├── CIFAR10.py
 │   ├── FMNIST.py
@@ -59,10 +59,6 @@ The LobeChat folder directory structure is organized as follows:
 │   ├── shuffle.py
 │   └── simulation_privacy_loss.py
 ├── saved_states        ## Directory for storing saved model states or training checkpoints.
-│   ├── dataset_FMNIST_lr_0.001_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
-│   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.0_delta_1e-05
-│   ├── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_0.1_sigma_1.1_delta_1e-05
-│   └── dataset_MNIST_lr_0.002_clients_10_q_0.01_max_norm_1.0_sigma_1.0_delta_1e-05
 ├── train_and_validation    ## Contains scripts for model training and validation in a federated learning setting.
 │   ├── train.py
 │   ├── train_with_dp.py
