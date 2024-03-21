@@ -138,7 +138,7 @@ The system has been rigorously tested under different conditions, demonstrating 
 
 ### ✔️ Test Accuracy Comparison
 
-TODO: Show accuracy comparisons.
+![Test loss comparison](./log/MNIST/test_accuracy_MNIST.png)
 
 ### 💸 Privacy Budget Comparison
 
