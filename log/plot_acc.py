@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import re  # 导入正则表达式模块
 
-directory = './MNIST'  # CSV文件目录
+directory = './MNIST/max_norm=1.0_sigma=1.0'  # CSV文件目录
 plt.figure(figsize=(10, 6))  # 设置图形大小
 
 for filename in os.listdir(directory):
@@ -22,7 +22,7 @@ for filename in os.listdir(directory):
         algorithm_name = algorithm_match.group(1) if algorithm_match else "Unknown"
 
         # 构建简化的文件名以用作图例标签
-        simplified_filename = f"MaxNorm {max_norm_value}, Sigma {sigma_value}, Algorithm {algorithm_name}"
+        simplified_filename = f"C={max_norm_value}, Sigma={sigma_value}, Algorithm {algorithm_name}"
 
         # 绘制图形
         plt.plot(data['epoch'], data['test_accuracy'], label=simplified_filename)
@@ -44,7 +44,7 @@ plt.legend(
 # plt.xscale('log')
 
 # 保存为PNG文件，设置dpi为300
-plt.savefig('./MNIST/test_accuracy_MNIST.png', dpi=300, bbox_inches='tight')
+plt.savefig('./MNIST/max_norm=1.0_sigma=1.0/test_accuracy_MNIST.png', dpi=300, bbox_inches='tight')
 
 # 展示图形
 plt.show()
