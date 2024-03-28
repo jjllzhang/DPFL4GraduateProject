@@ -7,23 +7,26 @@ def plot_from_csv(csv_path, label):
     plt.plot(data['round'], data['epsilon'], label=label)
 
 # 曲线的名字
-labels = ['Without Shuffler, sigma=1.0', 'Without Shuffler, sigma=1.1', 'With Shuffler, sigma=1.0']
+labels = ['Without Shuffler, sigma=1.1', 'Without Shuffler, sigma=1.0', 'Without Shuffler, sigma=0.9','With Shuffler, sigma=1.1', 'With Shuffler, sigma=1.0', 'With Shuffler, sigma=0.9']
 
 # 读取文件并绘制曲线
-plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[0])
-plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[1])
-plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv', labels[2])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[0])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[1])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_0.9_delta_1e-5_algorithm_fed_avg_with_dp.csv', labels[2])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv', labels[3])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv', labels[4])
+plot_from_csv('./log/q_for_batch_size_0.01_sigma_0.9_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv', labels[5])
 
 # 添加图例
 plt.legend()
 
 # 设置对数尺度的x轴
-plt.xscale('log')
+# plt.xscale('log')
 
 # 设置坐标轴标签和标题
 plt.xlabel('rounds')
 plt.ylabel('ε')
-plt.title('Privacy loss with δ = 1e-5')
+plt.title('Privacy loss with δ ≈ 1e-5')
 
 # 显示图形
 plt.show()
