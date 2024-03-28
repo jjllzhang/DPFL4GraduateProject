@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import re  # 导入正则表达式模块
 
-directory = './FMNIST/lr=0.001'  # CSV文件目录
+directory = './MNIST/compare_sigma'  # CSV文件目录
 plt.figure(figsize=(10, 6))  # 设置图形大小
 
 for filename in os.listdir(directory):
@@ -30,7 +30,7 @@ for filename in os.listdir(directory):
 
 plt.xlabel('Epoch')  # 设置X轴标签
 plt.ylabel('Test Accuracy')  # 设置Y轴标签
-plt.title('Test Accuracy over Epochs(FMNIST)')  # 设置图形标题
+plt.title('Test Accuracy over Epochs(MNIST)')  # 设置图形标题
 
 # 调整图例位置和大小
 plt.legend(
@@ -44,7 +44,7 @@ plt.legend(
 # plt.xscale('log')
 
 # 保存为PNG文件，设置dpi为300
-plt.savefig('./FMNIST/lr=0.001/test_accuracy_FMNIST.png', dpi=300, bbox_inches='tight')
+plt.savefig('./MNIST/compare_sigma/test_accuracy_MNIST.png', dpi=300, bbox_inches='tight')
 
 # 展示图形
 plt.show()
