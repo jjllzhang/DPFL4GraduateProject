@@ -24,7 +24,7 @@ plt.legend()
 # plt.xscale('log')
 
 # 设置坐标轴标签和标题
-plt.xlabel('rounds')
+plt.xlabel('T')
 plt.ylabel('ε')
 plt.title('Privacy loss with δ ≈ 1e-5')
 
