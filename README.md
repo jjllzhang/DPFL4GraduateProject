@@ -48,9 +48,8 @@ The LobeChat folder directory structure is organized as follows:
 ├── privacy_analysis    ## Focused on the privacy analysis of the implemented algorithms, with scripts to compute and visualize privacy metrics.
 │   ├── log
 │   │   ├── privacy_loss_comparsion.png
-│   │   ├── q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp.csv
-│   │   ├── q_for_batch_size_0.01_sigma_1.0_delta_1e-5_algorithm_fed_avg_with_dp_with_shuffler.csv
-│   │   └── q_for_batch_size_0.01_sigma_1.1_delta_1e-5_algorithm_fed_avg_with_dp.csv
+│   │   ├── privacy_loss_comparsion(q=0.01, sigma=1.0)
+│   │   ├── privacy_loss_comparsion(sigma=1.0)
 │   ├── compute_dp_sgd.py
 │   ├── compute_rdp.py
 │   ├── get_MaxSigma_or_MaxSteps.py
