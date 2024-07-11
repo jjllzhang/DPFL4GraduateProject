@@ -8,7 +8,7 @@ Protecting individual privacy in the era of ubiquitous data is a significant cha
 
 ## 💅 Folder Directory Structure
 
-The LobeChat folder directory structure is organized as follows:
+The folder directory structure is organized as follows:
 
 ```bash
 .
